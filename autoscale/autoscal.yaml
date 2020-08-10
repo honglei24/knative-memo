@@ -1,0 +1,15 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: autoscale-go
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app: autoscale-go
+      annotations:
+        autoscaling.knative.dev/target: "10"
+    spec:
+      containers:
+        - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/autoscale-go:0.1

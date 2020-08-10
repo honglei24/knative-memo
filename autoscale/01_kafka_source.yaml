@@ -1,0 +1,24 @@
+apiVersion: sources.knative.dev/v1alpha1
+kind: KafkaSource
+metadata:
+  name: tp-kafka-source
+spec:
+  consumerGroup: knative-group
+  resources:
+    limits:
+      cpu: 2500m
+      memory: 5120Mi
+    requests:
+      cpu: 2500m
+      memory: 5120Mi
+  bootstrapServers:
+          #- my-cluster-kafka-bootstrap.kafka:9092 # note the kafka namespace
+  - 125.88.39.147:9092 # note the kafka namespace
+  topics:
+  - knative-demo-topic
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: autoscale-go  
+

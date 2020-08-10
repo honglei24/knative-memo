@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-and-push
+spec:
+  params:
+    - name: sourceURL
+      type: string
+    - name: getFileImage
+      type: string
+    - name: kanikoExecutorImage
+      type: string
+    - name: destination
+      type: string
+  steps:
+  - image: $(params.getFileImage)
+    name: get-zip-file
+    script: |
+      #!/bin/sh
+      curl -s "$(params.sourceURL)" -o source.zip
+      unzip source.zip >/dev/null 2>&1
+      cp /app/* ./ -r
+      ls
+      pwd
+  - name: build-and-push
+    image: $(params.kanikoExecutorImage)
+    env:
+    - name: DOCKER_CONFIG
+      value: /tekton/home/.docker
+    command:
+    - /kaniko/executor
+    - --dockerfile=Dockerfile
+    - --context=/workspace/
+    - --destination=$(params.destination)
+

@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: build-and-push
+spec:
+  serviceAccountName: build-sa
+  taskRef:
+    name: build-and-push
+  params:
+    - name: sourceURL
+      value: "http://125.88.39.147:9001/honglei/test.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=Y3R5dW4K%2F20200804%2F%2Fs3%2Faws4_request&X-Amz-Date=20200804T150721Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=f0a6227a369a54f643ac4d4d692649378b9f5d30104be978eec09d53a6d36865"
+    - name: getFileImage
+      value: "harbor.ctyun.dev:1443/hl-test/python36:latest"
+    - name: kanikoExecutorImage
+      value: "harbor.ctyun.dev:1443/function-compute/kaniko-executor:v0.22.0"
+    - name: destination
+      value: "harbor.ctyun.dev:1443/hl-test/tplink:latest"

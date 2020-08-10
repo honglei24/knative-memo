@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: tplink-demo-python
+spec:
+  type: git
+  params:
+    - name: url
+      #value: https://gitlab.ctyuncdn.cn/honglei1/tekton-python-demo/
+      value: https://github.com/honglei24/tekton-python-demo/
+    - name: revision
+      value: tplink
