@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask, request
-import index
 import time
 import logging
 
